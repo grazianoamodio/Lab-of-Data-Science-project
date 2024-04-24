@@ -1,0 +1,17 @@
+WITH 
+  MEMBER [Measures].[AvgGravityPerState] AS
+    AVG(
+      [Geography].[State Name].MEMBERS,
+      [Measures].[Crime Gravity]
+    ),
+  FORMAT_STRING = "#,###,00"
+
+SELECT 
+  {[Measures].[Crime Gravity]} ON COLUMNS,
+  NON EMPTY 
+    [Geography].[State Name].MEMBERS *,
+	[Custodies].[Incident Id].MEMBERS
+    FILTER(
+      [Measures].[Crime Gravity] >= [Measures].[AvgGravityPerState]
+    ) ON ROWS
+FROM [Group ID 888 DB]

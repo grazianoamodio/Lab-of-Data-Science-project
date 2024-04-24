@@ -1,0 +1,27 @@
+WITH
+  MEMBER [Measures].[CrimeGravityPreviousYear] AS
+    (
+      [Measures].[Crime Gravity],
+      ParallelPeriod([Dates].[YearMonthQuarterDate_Hierarchy].[Year], 1, [Dates].[YearMonthQuarterDate_Hierarchy].CurrentMember)
+    )
+  MEMBER [Measures].[PercentageChange] AS
+    IIF(
+      [Measures].[CrimeGravityPreviousYear] = 0,
+      NULL,
+      ([Measures].[Crime Gravity] - [Measures].[CrimeGravityPreviousYear]) / [Measures].[CrimeGravityPreviousYear]
+    )
+  
+  MEMBER [Measures].[PercentageChanges] AS
+    Format([Measures].[PercentageChange], "Percent")
+
+SELECT
+  {
+    [Measures].[Crime Gravity], [Measures].[CrimeGravityPreviousYear], [Measures].[PercentageChanges]
+  } ON COLUMNS,
+  {
+    [Geography].[StateCity_Hierarchy].[State Name]
+  } ON ROWS
+FROM [Group ID 888 DB]
+WHERE [Dates].[YearMonthQuarterDate_Hierarchy].[Year].&[2016]
+
+
