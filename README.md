@@ -1,3 +1,2 @@
-# Lab-of-Data-Science-project
-Data science lab project in Decision Support Systems
-prova
+# Lab_of_Data_Science_project
+The dataset analyzed contained data on people involved in crimes in the US over 4 years. We designed and built a database with SQL Server Management Studio and then using SQL Server Integration Services answered several queries requested of us. We then built a HOLAP cube and performed various analyses. Lastly we produced a report by linking our multidimensional cube creating an interactive dashboard with Power BI. 
